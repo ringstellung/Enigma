@@ -39,6 +39,9 @@ Al final de la guerra se introdujo el reflector
 cables y 24 contactos, porque un par, el BO en la notación de Bletchley Park, era fijo.
 No está implementado.
 
+La explicación del código original está en una serie de artículos en
+[WildUnix](https://wildunix.es/).
+
 ## Glosario Básico (parcial)
 
 1. Buchstabenkenngruppe: grupo de letras para la identificación de la
