@@ -109,11 +109,10 @@ For the first part:
 	Loading package ghc-prim ... linking ... done.
 	Loading package integer-gmp ... linking ... done.
 	Loading package base ... linking ... done.
-	[1 of 5] Compiling Auxiliars        ( Auxiliars.hs, interpreted )
-	[3 of 5] Compiling Types            ( Types.hs, interpreted )
-	[4 of 5] Compiling Rotors           ( Rotors.hs, interpreted )
-	[5 of 5] Compiling EnigmaM3         ( EnigmaM3.hs, interpreted )
-	Ok, modules loaded: EnigmaM3, Auxiliars, Types, Rotors.
+	[1 of 3] Compiling EnigmaNucleo     ( ../nucleo/EnigmaNucleo.hs, interpreted )
+	[2 of 3] Compiling Rotors           ( ../nucleo/Rotors.hs, interpreted )
+	[3 of 3] Compiling EnigmaM3 ( EnigmaM3.hs, interpreted )
+	Ok, modules loaded: EnigmaM3, EnigmaNucleo, Rotors.
 	*EnigmaM3> let walzenlage31 = W rotor_02 rotor_04 rotor_05
 	Loading package array-0.5.0.0 ... linking ... done.
 	Loading package deepseq-1.3.0.2 ... linking ... done.
@@ -141,11 +140,10 @@ For the second part:
 	Loading package ghc-prim ... linking ... done.
 	Loading package integer-gmp ... linking ... done.
 	Loading package base ... linking ... done.
-	[1 of 5] Compiling Auxiliars        ( Auxiliars.hs, interpreted )
-	[3 of 5] Compiling Types            ( Types.hs, interpreted )
-	[4 of 5] Compiling Rotors           ( Rotors.hs, interpreted )
-	[5 of 5] Compiling EnigmaM3         ( EnigmaM3.hs, interpreted )
-	Ok, modules loaded: EnigmaM3, Auxiliars, Types, Rotors.
+	[1 of 3] Compiling EnigmaNucleo     ( ../nucleo/EnigmaNucleo.hs, interpreted )
+	[2 of 3] Compiling Rotors           ( ../nucleo/Rotors.hs, interpreted )
+	[3 of 3] Compiling EnigmaM3 ( EnigmaM3.hs, interpreted )
+	Ok, modules loaded: EnigmaM3, EnigmaNucleo, Rotors.
 	*EnigmaM3> let walzenlage32 = W rotor_02 rotor_04 rotor_05
 	Loading package array-0.5.0.0 ... linking ... done.
 	Loading package deepseq-1.3.0.2 ... linking ... done.

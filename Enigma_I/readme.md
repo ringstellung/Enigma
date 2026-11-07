@@ -109,12 +109,10 @@ For the first part:
 	Loading package ghc-prim ... linking ... done.
 	Loading package integer-gmp ... linking ... done.
 	Loading package base ... linking ... done.
-	[1 of 5] Compiling Auxiliars        ( Auxiliars.hs, interpreted )
-	[2 of 5] Compiling Dictionary       ( Dictionary.hs, interpreted )
-	[3 of 5] Compiling Types            ( Types.hs, interpreted )
+	[1 of 3] Compiling EnigmaNucleo     ( ../nucleo/EnigmaNucleo.hs, interpreted )
 	[4 of 5] Compiling Examples         ( Examples.hs, interpreted )
-	[5 of 5] Compiling EnigmaI          ( EnigmaI.hs, interpreted )
-	Ok, modules loaded: EnigmaI, Dictionary, Auxiliars, Types, Examples.
+	[3 of 3] Compiling EnigmaI ( EnigmaI.hs, interpreted )
+	Ok, modules loaded: EnigmaI, EnigmaNucleo, Rotors.
 	*EnigmaI> let walzenlage31 = W rotor_02 rotor_04 rotor_05
 	*EnigmaI> let ringstellung31 = RS (CharacterI 'B') (CharacterI 'U') (CharacterI 'L')
 	*EnigmaI> let pb31 = createPbSet "AV BS CG DL FU HZ IN KM OW RX"
@@ -139,12 +137,10 @@ For the second part:
 	Loading package ghc-prim ... linking ... done.
 	Loading package integer-gmp ... linking ... done.
 	Loading package base ... linking ... done.
-	[1 of 5] Compiling Auxiliars        ( Auxiliars.hs, interpreted )
-	[2 of 5] Compiling Dictionary       ( Dictionary.hs, interpreted )
-	[3 of 5] Compiling Types            ( Types.hs, interpreted )
+	[1 of 3] Compiling EnigmaNucleo     ( ../nucleo/EnigmaNucleo.hs, interpreted )
 	[4 of 5] Compiling Examples         ( Examples.hs, interpreted )
-	[5 of 5] Compiling EnigmaI          ( EnigmaI.hs, interpreted )
-	Ok, modules loaded: EnigmaI, Dictionary, Auxiliars, Types, Examples.
+	[3 of 3] Compiling EnigmaI ( EnigmaI.hs, interpreted )
+	Ok, modules loaded: EnigmaI, EnigmaNucleo, Rotors.
 	*EnigmaI> let walzenlage31 = W rotor_02 rotor_04 rotor_05
 	*EnigmaI> let ringstellung31 = RS (CharacterI 'B') (CharacterI 'U') (CharacterI 'L')
 	*EnigmaI> let pb31 = createPbSet "AV BS CG DL FU HZ IN KM OW RX"

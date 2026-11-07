@@ -10,7 +10,7 @@
 1. Kenngruppen: agrupaciones de letras para que el receptor pueda
    identificar la clave.
 
-1. Kriegmarine: marina de guerra
+1. Kriegsmarine: marina de guerra
 
 1. Grundstellung: posición básica de los rotores al inicio de la
    operación de cifrado. Se obtenía girando cada rotor sobre su eje
@@ -92,7 +92,7 @@ La configuración de la máquina es la siguiente:
 * Grundstellung (posición de partida): NAEM
 * Steckern (zócalo de clavijas): AE BF CM DQ HU JN LX PR SZ VW
 * Clave del mensaje: se determinará configurando la máquina con la
-  posición inical NAEM y procesando QEOB.
+  posición inicial NAEM y procesando QEOB.
 
 El texto cifrado es:
 
@@ -123,11 +123,10 @@ El procedimiento es el siguiente:
 	Loading package ghc-prim ... linking ... done.
 	Loading package integer-gmp ... linking ... done.
 	Loading package base ... linking ... done.
-	[1 of 4] Compiling Auxiliars        ( Auxiliars.hs, interpreted )
-	[2 of 4] Compiling Types            ( Types.hs, interpreted )
-	[3 of 4] Compiling Rotors           ( Rotors.hs, interpreted )
-	[4 of 4] Compiling EnigmaM4         ( EnigmaM4.hs, interpreted )
-	Ok, modules loaded: EnigmaM4, Auxiliars, Types, Examples.
+	[1 of 3] Compiling EnigmaNucleo     ( ../nucleo/EnigmaNucleo.hs, interpreted )
+	[2 of 3] Compiling Rotors           ( ../nucleo/Rotors.hs, interpreted )
+	[3 of 3] Compiling EnigmaM4 ( EnigmaM4.hs, interpreted )
+	Ok, modules loaded: EnigmaM4, EnigmaNucleo, Rotors.
 	*EnigmaM4> let walzenlage = W beta rotor_05 rotor_06 rotor_08
 	Loading package array-0.5.0.0 ... linking ... done.
 	Loading package deepseq-1.3.0.2 ... linking ... done.
@@ -181,12 +180,12 @@ que llevado al alemán normal es:
 	KRIEGSNOTMELDUNG [An] Alle:
 	
 	Folgendes ist sofort bekanntzugeben:
-	Ich habe folgende Befehl erhalten:
+	Ich habe folgenden Befehl erhalten:
 	'Anstelle des bisherigen Reichsmarschalls 'Göring' setzt der Führer
 	Sie, Herr Großadmiral, als seinen Nachfolger ein.
-	Schriftlische Vollmacht unterwegs.
+	Schriftliche Vollmacht unterwegs.
 	Ab sofort sollen Sie sämtliche Maßnahmen verfügen,
-	die sich aus die gegenwärtigen Lage ergeben.
+	die sich aus der gegenwärtigen Lage ergeben.
 	Gez. Reichsleiter (Tulpe) 'Bormann'
    
 	[Von] Oberbefehlshaber der Marine,
@@ -214,7 +213,7 @@ y traducido al inglés es:
 ### Ejemplo Nº 2
 
 El segundo ejemplo ha sido tomado del excelente sitio de [Dirk
-Rijmenants](http://users.telenet.be/d.rijmenants/en/m4project.htm)
+Rijmenants](https://www.ciphermachinesandcryptology.com/en/m4project.htm)
 
 El mensaje original ha sido desprovisto de su inicio
 FCLC QRKN quedando:
@@ -264,11 +263,10 @@ Con nuestra implementación procederíamos así:
 	Loading package ghc-prim ... linking ... done.
 	Loading package integer-gmp ... linking ... done.
 	Loading package base ... linking ... done.
-	[1 of 4] Compiling Auxiliars        ( Auxiliars.hs, interpreted )
-	[2 of 4] Compiling Types            ( Types.hs, interpreted )
-	[3 of 4] Compiling Rotors           ( Rotors.hs, interpreted )
-	[4 of 4] Compiling EnigmaM4         ( EnigmaM4.hs, interpreted )
-	Ok, modules loaded: EnigmaM4, Auxiliars, Types, Rotors.
+	[1 of 3] Compiling EnigmaNucleo     ( ../nucleo/EnigmaNucleo.hs, interpreted )
+	[2 of 3] Compiling Rotors           ( ../nucleo/Rotors.hs, interpreted )
+	[3 of 3] Compiling EnigmaM4 ( EnigmaM4.hs, interpreted )
+	Ok, modules loaded: EnigmaM4, EnigmaNucleo, Rotors.
 	*EnigmaM4> let walzenlage = W beta rotor_02 rotor_04 rotor_01
 	Loading package array-0.5.0.0 ... linking ... done.
 	Loading package deepseq-1.3.0.2 ... linking ... done.
@@ -302,7 +300,7 @@ Consiste en el descifrado del mensaje
 * Reflector: B 
 * Greek: C                (por 4º rotor o rotor griego: Gamma)
 * Wheels: 438 
-* Wheel positions: MVYY   (Grunstellung)
+* Wheel positions: MVYY   (Grundstellung)
 * Rings: AACU             (Ringstellung)
 * Plugs: CH EJ NV OU TY LG SZ PK DI QB
 * Message indicator groups: FFUC MWYR
@@ -334,11 +332,10 @@ El diálogo es el siguiente:
 	Loading package ghc-prim ... linking ... done.
 	Loading package integer-gmp ... linking ... done.
 	Loading package base ... linking ... done.
-	[1 of 4] Compiling Auxiliars        ( Auxiliars.hs, interpreted )
-	[2 of 4] Compiling Types            ( Types.hs, interpreted )
-	[3 of 4] Compiling Rotors           ( Rotors.hs, interpreted )
-	[4 of 4] Compiling EnigmaM4         ( EnigmaM4.hs, interpreted )
-	Ok, modules loaded: EnigmaM4, Auxiliars, Types, Rotors.
+	[1 of 3] Compiling EnigmaNucleo     ( ../nucleo/EnigmaNucleo.hs, interpreted )
+	[2 of 3] Compiling Rotors           ( ../nucleo/Rotors.hs, interpreted )
+	[3 of 3] Compiling EnigmaM4 ( EnigmaM4.hs, interpreted )
+	Ok, modules loaded: EnigmaM4, EnigmaNucleo, Rotors.
 	*EnigmaM4> let walzenlage = W gamma rotor_04 rotor_03 rotor_08
 	Loading package array-0.5.0.0 ... linking ... done.
 	Loading package deepseq-1.3.0.2 ... linking ... done.
@@ -368,11 +365,10 @@ la M3 y, por tanto, con la Enigma I. El diálogo es el siguiente:
 	Loading package ghc-prim ... linking ... done.
 	Loading package integer-gmp ... linking ... done.
 	Loading package base ... linking ... done.
-	[1 of 4] Compiling Auxiliars        ( Auxiliars.hs, interpreted )
-	[2 of 4] Compiling Types            ( Types.hs, interpreted )
-	[3 of 4] Compiling Rotors           ( Rotors.hs, interpreted )
-	[4 of 4] Compiling EnigmaM4         ( EnigmaM4.hs, interpreted )
-	Ok, modules loaded: EnigmaM4, Auxiliars, Types, Rotors.
+	[1 of 3] Compiling EnigmaNucleo     ( ../nucleo/EnigmaNucleo.hs, interpreted )
+	[2 of 3] Compiling Rotors           ( ../nucleo/Rotors.hs, interpreted )
+	[3 of 3] Compiling EnigmaM4 ( EnigmaM4.hs, interpreted )
+	Ok, modules loaded: EnigmaM4, EnigmaNucleo, Rotors.
 	*EnigmaM4> let walzenlage31 = W beta rotor_02 rotor_04 rotor_05
 	Loading package array-0.5.0.0 ... linking ... done.
 	Loading package deepseq-1.3.0.2 ... linking ... done.
