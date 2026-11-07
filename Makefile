@@ -1,5 +1,5 @@
 SALIDA := $(shell mktemp -d -t enigma)
-GHC := ghc -O2 -Wall -inucleo -iM3 -iM4 -iEnigma_C -outputdir $(SALIDA)
+GHC := ghc -O2 -Wall -inucleo -iM3 -iM4 -iEnigma_I -iEnigma_C -outputdir $(SALIDA)
 
 .PHONY: pruebas velocidad
 

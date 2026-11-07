@@ -6,6 +6,9 @@ In this file we provide some examples. With these examples and
 comments in the files (Spanish) should be enough to understand the
 project.
 
+The machine itself lives in `../nucleo`, shared with the M3 and the M4. From
+this folder, `ghci EnigmaI` finds it through the `.ghci` file.
+
 ## A Real Message (example) Given by Mr. DIRK RIJMENANTS
 
 The settings recovered by the CSG codebreakers:
@@ -105,12 +108,9 @@ Second decoded block
 For the first part:
 
 	iMac-de-User:Enigma_I_code fmgo$ ghci EnigmaI
-	GHCi, version 7.8.3: http://www.haskell.org/ghc/  :? for help
-	Loading package ghc-prim ... linking ... done.
-	Loading package integer-gmp ... linking ... done.
-	Loading package base ... linking ... done.
+	GHCi, version 9.14.1: http://www.haskell.org/ghc/  :? for help
 	[1 of 3] Compiling EnigmaNucleo     ( ../nucleo/EnigmaNucleo.hs, interpreted )
-	[4 of 5] Compiling Examples         ( Examples.hs, interpreted )
+	[2 of 3] Compiling Rotors           ( ../nucleo/Rotors.hs, interpreted )
 	[3 of 3] Compiling EnigmaI ( EnigmaI.hs, interpreted )
 	Ok, modules loaded: EnigmaI, EnigmaNucleo, Rotors.
 	*EnigmaI> let walzenlage31 = W rotor_02 rotor_04 rotor_05
@@ -133,12 +133,9 @@ For the first part:
 For the second part:
 
 	iMac-de-User:Enigma_I_code fmgo$ ghci EnigmaI
-	GHCi, version 7.8.3: http://www.haskell.org/ghc/  :? for help
-	Loading package ghc-prim ... linking ... done.
-	Loading package integer-gmp ... linking ... done.
-	Loading package base ... linking ... done.
+	GHCi, version 9.14.1: http://www.haskell.org/ghc/  :? for help
 	[1 of 3] Compiling EnigmaNucleo     ( ../nucleo/EnigmaNucleo.hs, interpreted )
-	[4 of 5] Compiling Examples         ( Examples.hs, interpreted )
+	[2 of 3] Compiling Rotors           ( ../nucleo/Rotors.hs, interpreted )
 	[3 of 3] Compiling EnigmaI ( EnigmaI.hs, interpreted )
 	Ok, modules loaded: EnigmaI, EnigmaNucleo, Rotors.
 	*EnigmaI> let walzenlage31 = W rotor_02 rotor_04 rotor_05

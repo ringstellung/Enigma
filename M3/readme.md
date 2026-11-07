@@ -105,18 +105,12 @@ Second decoded block
 For the first part:
 
 	iMac-de-User:EnigmaM3 fmgo$ ghci EnigmaM3
-	GHCi, version 7.8.3: http://www.haskell.org/ghc/  :? for help
-	Loading package ghc-prim ... linking ... done.
-	Loading package integer-gmp ... linking ... done.
-	Loading package base ... linking ... done.
+	GHCi, version 9.14.1: http://www.haskell.org/ghc/  :? for help
 	[1 of 3] Compiling EnigmaNucleo     ( ../nucleo/EnigmaNucleo.hs, interpreted )
 	[2 of 3] Compiling Rotors           ( ../nucleo/Rotors.hs, interpreted )
 	[3 of 3] Compiling EnigmaM3 ( EnigmaM3.hs, interpreted )
 	Ok, modules loaded: EnigmaM3, EnigmaNucleo, Rotors.
 	*EnigmaM3> let walzenlage31 = W rotor_02 rotor_04 rotor_05
-	Loading package array-0.5.0.0 ... linking ... done.
-	Loading package deepseq-1.3.0.2 ... linking ... done.
-	Loading package containers-0.5.5.1 ... linking ... done.
 	*EnigmaM3> let ringstellung31 = RS (CharacterI 'B') (CharacterI 'U') (CharacterI 'L')
 	*EnigmaM3> let pb31 = createPbSet "AV BS CG DL FU HZ IN KM OW RX"
 	*EnigmaM3> let grundstellung31 = GS 'W' 'X' 'C'
@@ -136,18 +130,12 @@ For the first part:
 For the second part:
 
 	iMac-de-User:EnigmaM3 fmgo$ ghci EnigmaM3
-	GHCi, version 7.8.3: http://www.haskell.org/ghc/  :? for help
-	Loading package ghc-prim ... linking ... done.
-	Loading package integer-gmp ... linking ... done.
-	Loading package base ... linking ... done.
+	GHCi, version 9.14.1: http://www.haskell.org/ghc/  :? for help
 	[1 of 3] Compiling EnigmaNucleo     ( ../nucleo/EnigmaNucleo.hs, interpreted )
 	[2 of 3] Compiling Rotors           ( ../nucleo/Rotors.hs, interpreted )
 	[3 of 3] Compiling EnigmaM3 ( EnigmaM3.hs, interpreted )
 	Ok, modules loaded: EnigmaM3, EnigmaNucleo, Rotors.
 	*EnigmaM3> let walzenlage32 = W rotor_02 rotor_04 rotor_05
-	Loading package array-0.5.0.0 ... linking ... done.
-	Loading package deepseq-1.3.0.2 ... linking ... done.
-	Loading package containers-0.5.5.1 ... linking ... done.
 	*EnigmaM3> let ringstellung32 = RS (CharacterI 'B') (CharacterI 'U') (CharacterI 'L')
 	*EnigmaM3> let pb32 = createPbSet "AV BS CG DL FU HZ IN KM OW RX"
 	*EnigmaM3> let grundstellung32 = GS 'C' 'R' 'S'

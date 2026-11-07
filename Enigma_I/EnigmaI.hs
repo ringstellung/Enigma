@@ -1,5 +1,5 @@
--- La Enigma I: la misma máquina que la M3, con los rotores I a V y los
--- reflectores A, B y C.
+-- La Enigma I del Ejército y la Aviación: tres rotores móviles elegidos entre
+-- los cinco primeros (I a V) y los reflectores A, B y C.
 module EnigmaI
   ( module EnigmaI
   , rotor_01, rotor_02, rotor_03, rotor_04, rotor_05

@@ -8,6 +8,7 @@ import Control.Exception (ErrorCall, evaluate, try)
 import Control.Monad (unless)
 import Data.Char (toLower)
 import qualified EnigmaComercial as C
+import qualified EnigmaI as I
 import qualified EnigmaM3 as M3
 import qualified EnigmaM4 as M4
 import qualified Data.ByteString.Char8 as BC
@@ -78,6 +79,13 @@ falla s = do
 pb :: String -> Pb
 pb = M3.createPbSet
 
+-- Texto del mensaje de Barbarossa, tal como lo da Rijmenants.
+barbarossa1c, barbarossa1, barbarossa2c, barbarossa2 :: String
+barbarossa1c = "EDPUDNRGYSZRCXNUYTPOMRMBOFKTBZREZKMLXLVEFGUEYSIOZVEQMIKUBPMMYLKLTTDEISMDICAGYKUACTCDOMOHWXMUUIAUBSTSLRNBZSZWNRFXWFYSSXJZVIJHIDISHPRKLKAYUPADTXQSPINQMATLPIFSVKDASCTACDPBOPVHJK"
+barbarossa1 = "AUFKLXABTEILUNGXVONXKURTINOWAXKURTINOWAXNORDWESTLXSEBEZXSEBEZXUAFFLIEGERSTRASZERIQTUNGXDUBROWKIXDUBROWKIXOPOTSCHKAXOPOTSCHKAXUMXEINSAQTDREINULLXUHRANGETRETENXANGRIFFXINFXRGTX"
+barbarossa2c = "SFBWDNJUSEGQOBHKRTAREEZMWKPPRBXOHDROEQGBBGTQVPGVKBVVGBIMHUSZYDAJQIROAXSSSNREHYGGRPISEZBOVMQIEMMZCYSGQDGRERVBILEKXYQIRGIRQNRDNVRXCYYTNJR"
+barbarossa2 = "DREIGEHTLANGSAMABERSIQERVORWAERTSXEINSSIEBENNULLSEQSXUHRXROEMXEINSXINFRGTXDREIXAUFFLIEGERSTRASZEMITANFANGXEINSSEQSXKMXKMXOSTWXKAMENECXK"
+
 main :: IO ()
 main = do
   mensajes <- map campos . lines <$> readFile "pruebas/mensajes.txt"
@@ -96,6 +104,15 @@ main = do
       snd' (_, b) = b
       nc = length (filter (not . bienC) vectoresC)
       ck = comercial C.EnigmaK "123" "DUR" "ERK"
+      letraI = I.CharacterI
+      ei1 = I.rotorSetup (I.W I.rotor_02 I.rotor_04 I.rotor_05)
+              (I.RS (letraI 'B') (letraI 'U') (letraI 'L')) (I.GS 'W' 'X' 'C') I.reflector_B
+      pi1 = I.createPbSet "AV BS CG DL FU HZ IN KM OW RX"
+      enI1 g = I.encodeTextEnigmaI (I.resetGrundstellung ei1 g) pi1
+      ei2 = I.rotorSetup (I.W I.rotor_01 I.rotor_02 I.rotor_05)
+              (I.RS (I.IntegerI 6) (I.IntegerI 22) (I.IntegerI 14)) (I.GS 'E' 'H' 'Z') I.reflector_B
+      pi2 = I.createPbSet "PO ML IU KJ NH YT GB VF RE DC"
+      enI2 g = I.encodeTextEnigmaI (I.resetGrundstellung ei2 g) pi2
       m1 = maquina "B" ["II", "IV", "V"] "BUL" "BLA"
       m4 = maquina "Bf" ["beta", "I", "II", "III"] "AAAA" "AAAA"
       p  = pb "AV BS CG DL FU HZ IN KM OW RX"
@@ -123,6 +140,16 @@ main = do
         (either (const False) (const True) (crearPb "AB CD EF GH IJ KL MN OP QR ST UV WX YZ"))
     , comprueba "un carácter no válido en el texto aborta" e1
     , comprueba "una letra fuera del alfabeto aborta" e2
+    , comprueba "Enigma I: indicadores de Barbarossa"
+        (enI1 (I.GS 'W' 'X' 'C') "KCH" == "BLA" && enI1 (I.GS 'C' 'R' 'S') "YPJ" == "LSD")
+    , comprueba "Enigma I: primera parte de Barbarossa"
+        (enI1 (I.GS 'B' 'L' 'A') barbarossa1c == barbarossa1)
+    , comprueba "Enigma I: segunda parte de Barbarossa"
+        (enI1 (I.GS 'L' 'S' 'D') barbarossa2c == barbarossa2)
+    , comprueba "Enigma I: ejemplo de Dönitz, con anillos numéricos"
+        (enI2 (I.GS 'E' 'H' 'Z') "TBS" == "XWB"
+           && enI2 (I.GS 'X' 'W' 'B') "QBLTWLDAHHYEOEFPTWYBLENDPMKOXLDFAMUDWIJDXRJZ"
+                == "DERFUEHRERISTTODXDERKAMPFGEHTWEITERXDOENITZX")
     , comprueba (show (length vectoresC) ++ " vectores de la comercial, " ++ show nc ++ " fallos") (nc == 0)
     , comprueba "K: el rápido III lleva al central al pasar de N"
         (tras (comercial C.EnigmaK "123" "AAA" "AAN" 'A') == "ABO")

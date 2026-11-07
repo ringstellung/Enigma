@@ -22,7 +22,8 @@ La versión anterior a esta organización tiene la etiqueta `v2017`.
 ## Uso
 
 Desde `M3`, `M4`, `Enigma_I` o `Enigma_C`, basta `ghci EnigmaM3` (o
-`EnigmaM4`, `EnigmaI`, `EnigmaComercial`), porque el fichero `.ghci` de cada carpeta añade `../nucleo`.
+`EnigmaM4`, `EnigmaI`, `EnigmaComercial`), porque el fichero `.ghci` de cada
+carpeta añade `../nucleo`.
 
 Para compilar y comprobar, desde la raíz:
 

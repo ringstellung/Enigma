@@ -119,18 +119,12 @@ entonces:
 El procedimiento es el siguiente:
 
 	iMac-de-User:M4 User$ ghci EnigmaM4.hs 
-	GHCi, version 7.8.3: http://www.haskell.org/ghc/  :? for help
-	Loading package ghc-prim ... linking ... done.
-	Loading package integer-gmp ... linking ... done.
-	Loading package base ... linking ... done.
+	GHCi, version 9.14.1: http://www.haskell.org/ghc/  :? for help
 	[1 of 3] Compiling EnigmaNucleo     ( ../nucleo/EnigmaNucleo.hs, interpreted )
 	[2 of 3] Compiling Rotors           ( ../nucleo/Rotors.hs, interpreted )
 	[3 of 3] Compiling EnigmaM4 ( EnigmaM4.hs, interpreted )
 	Ok, modules loaded: EnigmaM4, EnigmaNucleo, Rotors.
 	*EnigmaM4> let walzenlage = W beta rotor_05 rotor_06 rotor_08
-	Loading package array-0.5.0.0 ... linking ... done.
-	Loading package deepseq-1.3.0.2 ... linking ... done.
-	Loading package containers-0.5.5.1 ... linking ... done.
 	*EnigmaM4> let ringstellung = RS (CharacterI 'E') (CharacterI 'P') (CharacterI 'E') (CharacterI 'L')
 	*EnigmaM4> let pb = createPbSet "AE BF CM DQ HU JN LX PR SZ VW"
 	*EnigmaM4> let grundstellung = GS 'N' 'A' 'E' 'M'
@@ -259,18 +253,12 @@ El texto plano de Rijmenants es:
 Con nuestra implementación procederíamos así:
 
 	iMac-de-User:M4 User$ ghci EnigmaM4.hs 
-	GHCi, version 7.8.3: http://www.haskell.org/ghc/  :? for help
-	Loading package ghc-prim ... linking ... done.
-	Loading package integer-gmp ... linking ... done.
-	Loading package base ... linking ... done.
+	GHCi, version 9.14.1: http://www.haskell.org/ghc/  :? for help
 	[1 of 3] Compiling EnigmaNucleo     ( ../nucleo/EnigmaNucleo.hs, interpreted )
 	[2 of 3] Compiling Rotors           ( ../nucleo/Rotors.hs, interpreted )
 	[3 of 3] Compiling EnigmaM4 ( EnigmaM4.hs, interpreted )
 	Ok, modules loaded: EnigmaM4, EnigmaNucleo, Rotors.
 	*EnigmaM4> let walzenlage = W beta rotor_02 rotor_04 rotor_01
-	Loading package array-0.5.0.0 ... linking ... done.
-	Loading package deepseq-1.3.0.2 ... linking ... done.
-	Loading package containers-0.5.5.1 ... linking ... done.
 	*EnigmaM4> let ringstellung = RS (CharacterI 'A') (CharacterI 'A') (CharacterI 'A') (CharacterI 'V')
 	*EnigmaM4> let pb = createPbSet "AT BL DF GJ HM NW OP QY RZ VX"
 	*EnigmaM4> let grundstellung = GS 'V' 'J' 'N' 'A'
@@ -328,18 +316,12 @@ Nota: “Haka” es una abreviatura de “Hafenkapitän” (“Port Captain”)
 El diálogo es el siguiente:
 
 	iMac-de-User:M4 User$ ghci EnigmaM4.hs 
-	GHCi, version 7.8.3: http://www.haskell.org/ghc/  :? for help
-	Loading package ghc-prim ... linking ... done.
-	Loading package integer-gmp ... linking ... done.
-	Loading package base ... linking ... done.
+	GHCi, version 9.14.1: http://www.haskell.org/ghc/  :? for help
 	[1 of 3] Compiling EnigmaNucleo     ( ../nucleo/EnigmaNucleo.hs, interpreted )
 	[2 of 3] Compiling Rotors           ( ../nucleo/Rotors.hs, interpreted )
 	[3 of 3] Compiling EnigmaM4 ( EnigmaM4.hs, interpreted )
 	Ok, modules loaded: EnigmaM4, EnigmaNucleo, Rotors.
 	*EnigmaM4> let walzenlage = W gamma rotor_04 rotor_03 rotor_08
-	Loading package array-0.5.0.0 ... linking ... done.
-	Loading package deepseq-1.3.0.2 ... linking ... done.
-	Loading package containers-0.5.5.1 ... linking ... done.
 	*EnigmaM4> let ringstellung = RS (CharacterI 'A') (CharacterI 'A') (CharacterI 'C') (CharacterI 'U')
 	*EnigmaM4> let pb = createPbSet "CH EJ NV OU TY LG SZ PK DI QB"
 	*EnigmaM4> let grundstellung = GS 'M' 'V' 'Y' 'Y'
@@ -361,18 +343,12 @@ Finalmente haremos una demostración de la compatibilidad de la M4 con
 la M3 y, por tanto, con la Enigma I. El diálogo es el siguiente:
 
 	iMac-de-User:M4 User$ ghci EnigmaM4.hs 
-	GHCi, version 7.8.3: http://www.haskell.org/ghc/  :? for help
-	Loading package ghc-prim ... linking ... done.
-	Loading package integer-gmp ... linking ... done.
-	Loading package base ... linking ... done.
+	GHCi, version 9.14.1: http://www.haskell.org/ghc/  :? for help
 	[1 of 3] Compiling EnigmaNucleo     ( ../nucleo/EnigmaNucleo.hs, interpreted )
 	[2 of 3] Compiling Rotors           ( ../nucleo/Rotors.hs, interpreted )
 	[3 of 3] Compiling EnigmaM4 ( EnigmaM4.hs, interpreted )
 	Ok, modules loaded: EnigmaM4, EnigmaNucleo, Rotors.
 	*EnigmaM4> let walzenlage31 = W beta rotor_02 rotor_04 rotor_05
-	Loading package array-0.5.0.0 ... linking ... done.
-	Loading package deepseq-1.3.0.2 ... linking ... done.
-	Loading package containers-0.5.5.1 ... linking ... done.
 	*EnigmaM4> let ringstellung31 = RS (CharacterI 'A') (CharacterI 'B') (CharacterI 'U') (CharacterI 'L')
 	*EnigmaM4> let pb31 = createPbSet "AV BS CG DL FU HZ IN KM OW RX"
 	*EnigmaM4> let grundstellung31 = GS 'A' 'W' 'X' 'C'
