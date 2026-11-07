@@ -8,6 +8,28 @@ Máquina Enigma: `Enigma I`, `M3` y `M4`.
 No está implementado el reflector D configurable, aunque esperamos
 incorporarlo pronto.
 
+## Quién usaba cada máquina
+
+| Máquina | Quién la usaba |
+|---|---|
+| Enigma I | Ejército de tierra (Heer) y Aviación (Luftwaffe) |
+| M3 | Marina (Kriegsmarine), desde 1940 |
+| M4 | Marina: submarinos y acorazados, desde febrero de 1942; el resto de la marina siguió con la M3 |
+
+Es fácil tomar la M3 por la máquina de tierra, porque nació de ella: la marina
+adoptó la Enigma I en 1934, y M1 (1934), M2 (1938) y M3 (1940) son en lo esencial
+la misma máquina, con pequeñas diferencias de fabricación. Esos nombres se
+refieren a los procedimientos de clave, no al aparato.
+
+La M3 es «functionally identical» a la Enigma I, según Crypto Museum: los rotores
+I a V son los mismos, y los VI a VIII eran solo de la marina. Por eso `EnigmaM3`
+puede simular `EnigmaI`, aunque aquí se conserva cada una como modelo propio. La
+Enigma I tuvo además el reflector A, que también está en `nucleo/Rotors.hs`.
+
+Fuentes: Crypto Museum,
+<https://www.cryptomuseum.com/crypto/enigma/i/index.htm> y
+<https://www.cryptomuseum.com/crypto/enigma/m3/index.htm>.
+
 ## Organización
 
 * `nucleo/EnigmaNucleo.hs`: la máquina, común a todos los modelos.
