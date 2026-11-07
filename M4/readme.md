@@ -4,9 +4,7 @@
 
 ## La Enigma I, la M3 y la M4
 
-La historia de la máquina está contada en el sitio de
-[Dirk Rijmenants](https://www.ciphermachinesandcryptology.com/en/enigma.htm) y en el
-[Crypto Museum](https://www.cryptomuseum.com/crypto/enigma/index.htm). Aquí
+La historia de la máquina está resumida en [`historia.md`](../historia.md). Aquí
 explicamos la diferencia entre estos tres modelos y su reflejo en el código.
 
 La Enigma I cuenta con un juego de cinco rotores (del 1 al 5), y la M3 tiene esos

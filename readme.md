@@ -30,6 +30,8 @@ Fuentes: Crypto Museum,
 <https://www.cryptomuseum.com/crypto/enigma/i/index.htm> y
 <https://www.cryptomuseum.com/crypto/enigma/m3/index.htm>.
 
+La historia de los modelos está resumida en [`historia.md`](historia.md).
+
 ## Organización
 
 * `nucleo/EnigmaNucleo.hs`: la máquina, común a todos los modelos.
