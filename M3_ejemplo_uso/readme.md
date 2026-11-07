@@ -6,6 +6,9 @@ In this file we provide some examples. With these examples and
 comments in the files (Spanish) should be enough to understand the
 project.
 
+The file `M-I_example.pdf` is the author's worked example by hand, which
+he made to ground the implementation.
+
 ## A Real Message (example) Given by Mr. DIRK RIJMENANTS
 
 The settings recovered by the CSG codebreakers:
