@@ -3,10 +3,10 @@
 # Implementaciones de la Máquina Enigma 
 
 Contiene un código en `Haskell` que implementa diversos modelos de la
-Máquina Enigma: `Enigma I`, `M3` y `M4`.
+Máquina Enigma: `Enigma I`, `M3`, `M4` y la comercial, en sus modelos `D` y `K`.
 
-No está implementado el reflector D configurable, aunque esperamos
-incorporarlo pronto.
+No está implementado el reflector D configurable (UKW-D), que no tiene que ver
+con el modelo comercial D, aunque esperamos incorporarlo pronto.
 
 ## Quién usaba cada máquina
 
