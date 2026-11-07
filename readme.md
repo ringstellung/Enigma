@@ -41,6 +41,61 @@ Fuentes: Crypto Museum,
 
 La versión anterior a esta organización tiene la etiqueta `v2017`.
 
+## Primeros pasos
+
+Hace falta [GHC](https://www.haskell.org/ghcup/) (probado con la versión 9.14.1). No
+hay un programa que se ejecute: las máquinas se usan desde `ghci`. Este ejemplo descifra
+un mensaje del manual de Rijmenants con la M3:
+
+	$ cd M3
+	$ ghci EnigmaM3
+	> let rotores = W rotor_01 rotor_02 rotor_05
+	> let anillos = RS (CharacterI 'F') (CharacterI 'V') (CharacterI 'N')
+	> let clavijas = createPbSet "PO ML IU KJ NH YT GB VF RE DC"
+	> let maquina = rotorSetup rotores anillos (GS 'X' 'W' 'B') reflector_B
+	> encodeTextEnigmaM3 maquina clavijas "QBLTWLDAHHYEOEFPTWYBLENDPMKOXLDFAMUDWIJDXRJZ"
+	"DERFUEHRERISTTODXDERKAMPFGEHTWEITERXDOENITZX"
+
+Cifrar y descifrar son la misma orden, con la misma clave. `W` son los rotores, de
+izquierda a derecha; `RS`, los anillos; `GS`, la posición de partida.
+
+Hay más ejemplos, con mensajes reales, en `M3_ejemplo_uso/` (en inglés y en español),
+`Enigma_I/`, `M4/` y `Enigma_C/`.
+
+## La M3 y la M4 como Enigma I
+
+Las tres máquinas descifran los mismos mensajes si se configuran así:
+
+| Si la Enigma I tiene | En la M3 | En la M4 |
+|---|---|---|
+| reflector B | `reflector_B` | `reflector_B_Thin` y griego `beta` |
+| reflector C | `reflector_C` | `reflector_C_Thin` y griego `gamma` |
+| rotores I a V | los mismos, `rotor_01` a `rotor_05` | los mismos, tras el griego |
+| anillos | los mismos | `A` en el griego, y después los mismos |
+| posición | la misma | `A` en el griego, y después la misma |
+| clavijas | las mismas | las mismas |
+
+El griego va el primero, a la izquierda, y no avanza. Así, para la clave del ejemplo
+anterior, la Enigma I, la M3 y la M4 se montan de esta forma:
+
+	-- Enigma I, en Enigma_I (ghci EnigmaI)
+	rotorSetup (W rotor_01 rotor_02 rotor_05) (RS (CharacterI 'F') (CharacterI 'V') (CharacterI 'N'))
+	           (GS 'X' 'W' 'B') reflector_B
+
+	-- M3, en M3 (ghci EnigmaM3): la misma orden
+
+	-- M4, en M4 (ghci EnigmaM4)
+	rotorSetup (W beta rotor_01 rotor_02 rotor_05)
+	           (RS (CharacterI 'A') (CharacterI 'F') (CharacterI 'V') (CharacterI 'N'))
+	           (GS 'A' 'X' 'W' 'B') reflector_B_Thin
+
+Después se cifra con `encodeTextEnigmaI`, `encodeTextEnigmaM3` o `encodeTextEnigmaM4`.
+Con el reflector C, en la M4 se cambian `beta` por `gamma` y `reflector_B_Thin` por
+`reflector_C_Thin`. El griego solo equivale a no estar con el anillo y la posición en
+`A`: con otra letra, la máquina ya es otra. Los reflectores A y los rotores VI a VIII no
+tienen equivalente en esta tabla: el A no tiene versión fina, y los VI a VIII no
+existían en la Enigma I. `make pruebas` comprueba la tabla con los reflectores B y C.
+
 ## Uso
 
 Desde `M3`, `M4`, `Enigma_I` o `Enigma_C`, basta `ghci EnigmaM3` (o

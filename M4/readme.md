@@ -2,6 +2,43 @@
 
 # Uso de la M4 
 
+## La Enigma I, la M3 y la M4
+
+La historia de la máquina está contada en el sitio de
+[Dirk Rijmenants](https://www.ciphermachinesandcryptology.com/en/enigma.htm) y en el
+[Crypto Museum](https://www.cryptomuseum.com/crypto/enigma/index.htm). Aquí
+explicamos la diferencia entre estos tres modelos y su reflejo en el código.
+
+La Enigma I cuenta con un juego de cinco rotores (del 1 al 5), y la M3 tiene esos
+mismos rotores y tres más (del 6 al 8). Los rotores añadidos tienen la particularidad de
+contar con dos muescas que, para gozo de los atacantes a la cifra, están enfrentadas
+físicamente. El mecanismo de cifrado es idéntico en ambos modelos, incluido el avance
+irregular o «por doble motivo» del segundo rotor. Por eso las dos comparten el código
+de `nucleo`, aunque cada una conserva su módulo.
+
+Es crucial señalar que la peculiaridad del avance del segundo rotor es ignorada por
+algunos, incluso por algunos renombrados: autores, libros y sitios; no damos crédito a
+lo que a veces leemos. Si no fuera por ese avance «por doble motivo» del segundo rotor,
+la máquina sería un odómetro, pero eso no la hace más fuerte: es una rareza mecánica
+que incluso acorta el periodo, de 17 576 a 16 900 posiciones.
+
+La M4 es físicamente una bella generalización de la M3, aunque su fortaleza no creció
+tanto como sugiere el cuarto rotor. Este, que cupo en virtud del adelgazamiento de los
+reflectores B (B Thin) y C (C Thin), no avanza al cifrar, aunque es configurable en
+cuanto al Grundstellung y al Ringstellung. Se denomina Zusatzwalze o Greek, y puede
+ser Beta o Gamma.
+
+Los reflectores delgados no coinciden en el cableado interno con sus homólogos de la
+M3 o la Enigma I, pero hay un modo de compatibilidad, con el que una M4 puede cifrar
+para una M3 y descifrar sus mensajes. Configurada con el reflector B Thin y Beta en
+posición A y Ringstellung A, simula la M3 con reflector B; con el reflector C Thin y Gamma,
+la M3 con reflector C.
+
+Al final de la guerra se introdujo el reflector
+[tipo D](https://www.cryptomuseum.com/crypto/enigma/ukwd/index.htm), ajustable con 12
+cables y 24 contactos, porque un par, el BO en la notación de Bletchley Park, era fijo.
+No está implementado.
+
 ## Glosario Básico (parcial)
 
 1. Buchstabenkenngruppe: grupo de letras para la identificación de la

@@ -66,6 +66,20 @@ texto n sem = [ toEnum (65 + (i * 7 + i * i * 3 + sem) `mod` 26) | i <- [0 .. n 
 suma :: String -> Int
 suma = foldl' (\h c -> (h * 131 + fromEnum c) `mod` 2147483647) 0
 
+-- La M3 y la M4 hacen de Enigma I. En la M4, griego y reflector fino.
+simulaI :: Reflector -> Reflector -> Rotor -> Bool
+simulaI u uf g = all (== cifrar mi p t) [cifrar m3 p t, cifrar m4 p t]
+  where
+    p = pb "PO ML IU KJ NH YT GB VF RE DC"
+    t = "QBLTWLDAHHYEOEFPTWYBLENDPMKOXLDFAMUDWIJDXRJZ"
+    mi = I.rotorSetup (I.W rotor_01 rotor_02 rotor_05)
+           (I.RS (I.CharacterI 'F') (I.CharacterI 'V') (I.CharacterI 'N')) (I.GS 'X' 'W' 'B') u
+    m3 = M3.rotorSetup (M3.W rotor_01 rotor_02 rotor_05)
+           (M3.RS (M3.CharacterI 'F') (M3.CharacterI 'V') (M3.CharacterI 'N')) (M3.GS 'X' 'W' 'B') u
+    m4 = M4.rotorSetup (M4.W g rotor_01 rotor_02 rotor_05)
+           (M4.RS (M4.CharacterI 'A') (M4.CharacterI 'F') (M4.CharacterI 'V') (M4.CharacterI 'N'))
+           (M4.GS 'A' 'X' 'W' 'B') uf
+
 comprueba :: String -> Bool -> IO Bool
 comprueba nombre ok = do
   putStrLn ((if ok then "bien   " else "MAL    ") ++ nombre)
@@ -125,6 +139,10 @@ main = do
   rs <- sequence
     [ comprueba (show (length mensajes) ++ " mensajes reales, " ++ show nb ++ " fallos") (nb == 0)
     , comprueba (show (length azar) ++ " configuraciones al azar, " ++ show na ++ " fallos") (na == 0)
+    , comprueba "la M3 y la M4 simulan la Enigma I con el reflector B"
+        (simulaI reflector_B reflector_B_Thin beta)
+    , comprueba "la M3 y la M4 simulan la Enigma I con el reflector C"
+        (simulaI reflector_C reflector_C_Thin gamma)
     , comprueba "cifrar dos veces es la identidad" (cifrar m1 p c1 == t)
     , comprueba "ninguna letra se cifra en sí misma" (and (zipWith (/=) t c1))
     , comprueba "las minúsculas equivalen a mayúsculas" (cifrar m1 p (map toLower t) == c1)
