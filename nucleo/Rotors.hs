@@ -26,3 +26,16 @@ reflector_B      = hacerReflector "YRUHQSLDPXNGOKMIEBFZCWVJAT"
 reflector_C      = hacerReflector "FVPJIAOYEDRZXWGCTKUQSBNMHL"
 reflector_B_Thin = hacerReflector "ENKQAUYWJICOPBLMDXZVFTHRGS"
 reflector_C_Thin = hacerReflector "RDOBJNTKVEHMLFCWZAXGYIPSUQ"
+
+-- La máquina comercial: Crypto Museum, «Enigma wiring». Las muescas son las
+-- de la K; en la D dependen del anillo (véase EnigmaComercial).
+etw_QWERTZ :: Entrada
+etw_QWERTZ = hacerEntrada "QWERTZUIOASDFGHJKPYXCVBNML"
+
+rotor_K1, rotor_K2, rotor_K3 :: Rotor
+rotor_K1 = hacerRotor "LPGSZMHAEOQKVXRFYBUTNICJDW" "Y"
+rotor_K2 = hacerRotor "SLVGBTFXJQOHEWIRZYAMKPCNDU" "E"
+rotor_K3 = hacerRotor "CJGDPSHKTURAWZXFMYNQOBVLIE" "N"
+
+reflector_K :: Reflector
+reflector_K = hacerReflector "IMETCGFRAYSQBZXWLHKDVUPOJN"

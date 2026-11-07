@@ -14,16 +14,15 @@ incorporarlo pronto.
 * `nucleo/Rotors.hs`: los rotores y reflectores históricos.
 * `M3/EnigmaM3.hs`, `M4/EnigmaM4.hs` y `Enigma_I/EnigmaI.hs`: módulos finos,
   con los nombres de siempre (`rotorSetup`, `encodeTextEnigmaM3`...).
+* `Enigma_C/EnigmaComercial.hs`: la Enigma comercial, modelos D y K.
 * `pruebas/`: mensajes reales, vectores de otra implementación y propiedades.
-* `Enigma_C/`: prototipo de 2016. No compila con el GHC actual y no usa el
-  núcleo.
 
 La versión anterior a esta organización tiene la etiqueta `v2017`.
 
 ## Uso
 
-Desde `M3`, `M4` o `Enigma_I`, basta `ghci EnigmaM3` (o `EnigmaM4`,
-`EnigmaI`), porque el fichero `.ghci` de cada carpeta añade `../nucleo`.
+Desde `M3`, `M4`, `Enigma_I` o `Enigma_C`, basta `ghci EnigmaM3` (o
+`EnigmaM4`, `EnigmaI`, `EnigmaComercial`), porque el fichero `.ghci` de cada carpeta añade `../nucleo`.
 
 Para compilar y comprobar, desde la raíz:
 

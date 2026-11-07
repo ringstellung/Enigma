@@ -7,9 +7,12 @@ module Main (main) where
 import Control.Exception (ErrorCall, evaluate, try)
 import Control.Monad (unless)
 import Data.Char (toLower)
+import qualified EnigmaComercial as C
 import qualified EnigmaM3 as M3
 import qualified EnigmaM4 as M4
-import EnigmaNucleo (Montaje, Pb, Reflector, Rotor, cifrar, crearPb, posiciones)
+import qualified Data.ByteString.Char8 as BC
+import Data.List (nub)
+import EnigmaNucleo (Montaje, Pb, Reflector, Rotor, cifrar, cifrarBytes, crearPb, posiciones, sinClavijero)
 import Rotors
 import System.Exit (exitFailure)
 
@@ -40,6 +43,17 @@ maquina u [a, b, c, d] [p, q, r, s] [x, y, z, t] =
     (M4.GS x y z t) (reflector u)
 maquina _ _ _ _ = error "maquina"
 
+comercial :: C.Modelo -> String -> String -> String -> Char -> Montaje
+comercial m [a, b, c] [p, q, r] [x, y, z] =
+  C.rotorSetup m (C.W (k a) (k b) (k c))
+    (C.RS (C.CharacterI p) (C.CharacterI q) (C.CharacterI r)) (C.GS x y z)
+  where
+    k '1' = C.rotor_K1
+    k '2' = C.rotor_K2
+    k '3' = C.rotor_K3
+    k n   = error [n]
+comercial _ _ _ _ = error "comercial"
+
 campos :: String -> [String]
 campos s = case break (== '\t') s of
   (a, _ : r) -> a : campos r
@@ -68,11 +82,20 @@ main :: IO ()
 main = do
   mensajes <- map campos . lines <$> readFile "pruebas/mensajes.txt"
   azar     <- map campos . lines <$> readFile "pruebas/azar.txt"
+  vectoresC <- map words . lines <$> readFile "pruebas/comercial.txt"
   let bienM [u, rs, an, po, ps, c, cl] = cifrar (maquina u (words rs) an po) (pb ps) c == cl
       bienM _ = False
       bienA [u, rs, an, po, ps, n, s, h] =
         suma (cifrar (maquina u (words rs) an po) (pb ps) (texto (read n) (read s))) == read h
       bienA _ = False
+      bienC [mo, rs, an, po, [u], cl, ci] =
+        let m = if mo == "D" then C.EnigmaD else C.EnigmaK
+        in C.encodeTextEnigmaComercial (comercial m rs an po u) cl == ci
+      bienC _ = False
+      tras m = posiciones (snd' (cifrarBytes m sinClavijero (BC.pack "A")))
+      snd' (_, b) = b
+      nc = length (filter (not . bienC) vectoresC)
+      ck = comercial C.EnigmaK "123" "DUR" "ERK"
       m1 = maquina "B" ["II", "IV", "V"] "BUL" "BLA"
       m4 = maquina "Bf" ["beta", "I", "II", "III"] "AAAA" "AAAA"
       p  = pb "AV BS CG DL FU HZ IN KM OW RX"
@@ -100,5 +123,23 @@ main = do
         (either (const False) (const True) (crearPb "AB CD EF GH IJ KL MN OP QR ST UV WX YZ"))
     , comprueba "un carácter no válido en el texto aborta" e1
     , comprueba "una letra fuera del alfabeto aborta" e2
+    , comprueba (show (length vectoresC) ++ " vectores de la comercial, " ++ show nc ++ " fallos") (nc == 0)
+    , comprueba "K: el rápido III lleva al central al pasar de N"
+        (tras (comercial C.EnigmaK "123" "AAA" "AAN" 'A') == "ABO")
+    , comprueba "K: el anillo no mueve la letra del salto"
+        (tras (comercial C.EnigmaK "123" "AAF" "AAN" 'A') == "ABO")
+    , comprueba "K: doble paso del central en E"
+        (tras (comercial C.EnigmaK "123" "AAA" "AEA" 'A') == "BFB")
+    , comprueba "D: con el anillo en A, salta al pasar de Z"
+        (tras (comercial C.EnigmaD "123" "AAA" "AAZ" 'A') == "ABA")
+    , comprueba "D: el salto es la letra anterior a la del anillo"
+        (tras (comercial C.EnigmaD "123" "AAC" "AAB" 'A') == "ABC")
+    , comprueba "comercial: involución en las 26 posiciones del reflector"
+        (and [ C.encodeTextEnigmaComercial (ck u) (C.encodeTextEnigmaComercial (ck u) t) == t
+             | u <- ['A' .. 'Z'] ])
+    , comprueba "comercial: ninguna letra se cifra en sí misma"
+        (and (zipWith (/=) t (C.encodeTextEnigmaComercial (ck 'L') t)))
+    , comprueba "comercial: las 26 posiciones del reflector difieren"
+        (length (nub [ take 200 (C.encodeTextEnigmaComercial (ck u) t) | u <- ['A' .. 'Z'] ]) == 26)
     ]
   unless (and rs) exitFailure

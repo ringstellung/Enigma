@@ -4,7 +4,9 @@
 
   Una máquina es una lista de rotores montados, del de la izquierda al de la
   derecha. Solo avanzan los tres de la derecha; el griego de la M4, si lo
-  hay, se queda quieto. M3 y M4 son módulos finos sobre este.
+  hay, se queda quieto. M3, M4, Enigma I y la comercial son módulos finos
+  sobre este. Las máquinas militares tienen el disco de entrada identidad;
+  la comercial lo tiene en orden QWERTZ y su reflector se puede girar.
 
   Para ir deprisa, cada rotor guarda dos tablas de 676 entradas con su
   permutación para cada desplazamiento (posición menos anillo), y lo que hay
@@ -16,12 +18,19 @@ module EnigmaNucleo
   , Rotor
   , Reflector
   , Pb
+  , Entrada
   , Montaje
   , hacerRotor
   , hacerReflector
+  , hacerEntrada
+  , conMuescas
+  , girarReflector
   , crearPb
   , createPbSet
+  , sinClavijero
+  , indiceAnillo
   , montar
+  , montarCon
   , reposicionar
   , posiciones
   , cifrar
@@ -96,9 +105,15 @@ hacerRotor w ms
   | otherwise = Rotor w tablaM (tablaDe d) (tablaDe i)
   where
     d = map (indiceSeguro "hacerRotor") w
-    i = [ p | x <- [0 .. 25], (p, y) <- zip [0 ..] d, y == x ]
-    ns = map (indiceSeguro "hacerRotor") ms
-    tablaM = B.pack [ if n `elem` ns then 1 else 0 | n <- [0 .. 25] ]
+    i = inversa d
+    tablaM = tablaMuescas ms
+
+inversa :: [Int] -> [Int]
+inversa d = [ p | x <- [0 .. 25], (p, y) <- zip [0 ..] d, y == x ]
+
+tablaMuescas :: String -> B.ByteString
+tablaMuescas ms = B.pack [ if n `elem` ns then 1 else 0 | n <- [0 .. 25 :: Int] ]
+  where ns = map (indiceSeguro "muesca") ms
 
 hacerReflector :: String -> Reflector
 hacerReflector w
@@ -108,6 +123,30 @@ hacerReflector w
   where
     t = B.pack (map (fromIntegral . indiceSeguro "hacerReflector") w)
     malo n = let m = fromIntegral (B.index t n) in m == n || fromIntegral (B.index t m) /= n
+
+-- El disco de entrada: a cada tecla le corresponde un contacto. La cadena da
+-- las teclas de los contactos A, B, C...: "QWERTZ..." lleva Q al contacto A.
+data Entrada = Entrada !B.ByteString !B.ByteString deriving Show
+
+hacerEntrada :: String -> Entrada
+hacerEntrada w
+  | not (esPermutacion w) = error ("hacerEntrada: no es una permutación: " ++ w)
+  | otherwise = Entrada (B.pack (map fromIntegral (inversa d))) (B.pack (map fromIntegral d))
+  where d = map (indiceSeguro "hacerEntrada") w
+
+entradaIdentidad :: Entrada
+entradaIdentidad = hacerEntrada ['A' .. 'Z']
+
+-- Cambia las muescas sin rehacer las tablas de cableado.
+conMuescas :: String -> Rotor -> Rotor
+conMuescas ms r = r {muescas = tablaMuescas ms}
+
+-- El reflector girado a la posición dada, como un rotor con el anillo en A.
+girarReflector :: Char -> Reflector -> Reflector
+girarReflector p (Reflector t) = Reflector (B.pack
+  [ fromIntegral ((fromIntegral (B.index t ((x + o) `mod` 26)) + 26 - o) `mod` 26 :: Int)
+  | x <- [0 .. 25] ])
+  where o = indiceSeguro "posición del reflector" p
 
 -- Construye el clavijero. A diferencia de createPbSet, no aborta.
 crearPb :: String -> Either String Pb
@@ -132,6 +171,10 @@ crearPb s
 createPbSet :: String -> Pb
 createPbSet = either error id . crearPb
 
+-- La máquina sin clavijas.
+sinClavijero :: Pb
+sinClavijero = Pb (B.pack [0 .. 25])
+
 data Disco = Disco
   { dRotor  :: !Rotor
   , dAnillo :: !Int
@@ -140,7 +183,7 @@ data Disco = Disco
 
 -- Reflector y discos: el rápido, el central, el lento y el griego. En una
 -- máquina de tres rotores, el griego es la identidad.
-data Montaje = Montaje !B.ByteString !Disco !Disco !Disco !Disco
+data Montaje = Montaje !B.ByteString !Disco !Disco !Disco !Disco !Entrada
   deriving Show
 
 identidad :: Disco
@@ -154,23 +197,26 @@ indiceAnillo (IntegerI n)
 
 -- Los rotores se dan de izquierda a derecha, cada uno con anillo y posición.
 montar :: Reflector -> [(Rotor, CharOrInt, Char)] -> Montaje
-montar (Reflector u) rs = case reverse (map disco rs) of
-  [d1, d2, d3]     -> Montaje u d1 d2 d3 identidad
-  [d1, d2, d3, d4] -> Montaje u d1 d2 d3 d4
+montar = montarCon entradaIdentidad
+
+montarCon :: Entrada -> Reflector -> [(Rotor, CharOrInt, Char)] -> Montaje
+montarCon e (Reflector u) rs = case reverse (map disco rs) of
+  [d1, d2, d3]     -> Montaje u d1 d2 d3 identidad e
+  [d1, d2, d3, d4] -> Montaje u d1 d2 d3 d4 e
   _                -> error "montar: hacen falta tres o cuatro rotores"
   where
     disco (r, a, p) = Disco r (indiceAnillo a) (indiceSeguro "posición" p)
 
 -- Cambia las posiciones, dadas de izquierda a derecha.
 reposicionar :: Montaje -> [Char] -> Montaje
-reposicionar (Montaje u d1 d2 d3 d4) ps = case reverse (map (indiceSeguro "posición") ps) of
-  [a, b, c]    -> Montaje u d1 {dPos = a} d2 {dPos = b} d3 {dPos = c} d4
-  [a, b, c, d] -> Montaje u d1 {dPos = a} d2 {dPos = b} d3 {dPos = c} d4 {dPos = d}
+reposicionar (Montaje u d1 d2 d3 d4 e) ps = case reverse (map (indiceSeguro "posición") ps) of
+  [a, b, c]    -> Montaje u d1 {dPos = a} d2 {dPos = b} d3 {dPos = c} d4 e
+  [a, b, c, d] -> Montaje u d1 {dPos = a} d2 {dPos = b} d3 {dPos = c} d4 {dPos = d} e
   _            -> error "reposicionar: hacen falta tres o cuatro posiciones"
 
 -- Posiciones actuales, de izquierda a derecha.
 posiciones :: Montaje -> String
-posiciones (Montaje _ d1 d2 d3 d4) = map (letra . fromIntegral . dPos) (griego ++ [d3, d2, d1])
+posiciones (Montaje _ d1 d2 d3 d4 _) = map (letra . fromIntegral . dPos) (griego ++ [d3, d2, d1])
   where griego = [ d4 | cableado (dRotor d4) /= ['A' .. 'Z'] ]
 
 -- Desplazamiento de un disco en una posición dada.
@@ -184,7 +230,7 @@ en t i = fromIntegral (BU.unsafeIndex t i)
 
 -- Lo que hay a la izquierda del rotor rápido: ida, reflector y vuelta.
 recomponer :: Ptr Word8 -> B.ByteString -> Montaje -> Int -> Int -> Int -> IO ()
-recomponer !m !u (Montaje _ _ d2 d3 d4) !o2 !o3 !o4 = go 0
+recomponer !m !u (Montaje _ _ d2 d3 d4 _) !o2 !o3 !o4 = go 0
   where
     !i2 = tablaIda (dRotor d2) ; !v2 = tablaVuelta (dRotor d2)
     !i3 = tablaIda (dRotor d3) ; !v3 = tablaVuelta (dRotor d3)
@@ -202,10 +248,13 @@ recomponer !m !u (Montaje _ _ d2 d3 d4) !o2 !o3 !o4 = go 0
 -- Cifra un bloque y devuelve la máquina en su posición final. Las entradas
 -- deben ser letras mayúsculas.
 cifrarBytes :: Montaje -> Pb -> B.ByteString -> (B.ByteString, Montaje)
-cifrarBytes mo@(Montaje u d1 d2 d3 d4) (Pb pb) texto =
+cifrarBytes mo@(Montaje u d1 d2 d3 d4 e@(Entrada eIda eVuelta)) (Pb pb) texto =
   unsafeDupablePerformIO (BI.createUptoN' n trabajo)
   where
     !n  = B.length texto
+    -- Tecla, clavijero y disco de entrada, a la ida; al revés, a la vuelta.
+    !ida    = B.map (BU.unsafeIndex eIda . fromIntegral) pb
+    !vuelta = B.map (BU.unsafeIndex pb . fromIntegral) eVuelta
     !i1 = tablaIda (dRotor d1)
     !v1 = tablaVuelta (dRotor d1)
     !n1 = muescas (dRotor d1)
@@ -213,7 +262,7 @@ cifrarBytes mo@(Montaje u d1 d2 d3 d4) (Pb pb) texto =
     !o4 = despl d4 (dPos d4)
     trabajo sal = allocaBytes 26 $ \m -> do
       let inc x = if x == 25 then 0 else x + 1 :: Int
-          fin p1 p2 p3 = (n, Montaje u d1 {dPos = p1} d2 {dPos = p2} d3 {dPos = p3} d4)
+          fin p1 p2 p3 = (n, Montaje u d1 {dPos = p1} d2 {dPos = p2} d3 {dPos = p3} d4 e)
           comp p2 p3 = recomponer m u mo (despl d2 p2) (despl d3 p3) o4
           bucle :: Int -> Int -> Int -> Int -> Int -> IO (Int, Montaje)
           bucle !k !p1 !o1 !p2 !p3
@@ -242,10 +291,10 @@ cifrarBytes mo@(Montaje u d1 d2 d3 d4) (Pb pb) texto =
           letraBucle !k !o = do
             let !c = en texto k - 65
                 !a = o * 26
-                !x = en i1 (a + en pb c)
+                !x = en i1 (a + en ida c)
             z <- peekByteOff m x :: IO Word8
             let !w = en v1 (a + fromIntegral z)
-            pokeByteOff sal k (fromIntegral (en pb w) + 65 :: Word8)
+            pokeByteOff sal k (fromIntegral (en vuelta w) + 65 :: Word8)
       comp (dPos d2) (dPos d3)
       bucle 0 (dPos d1) (despl d1 (dPos d1)) (dPos d2) (dPos d3)
 
