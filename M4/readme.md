@@ -358,6 +358,8 @@ El diálogo es el siguiente:
 	True
 	*EnigmaM4> 
 
+### Ejemplo Nº 4
+
 Finalmente haremos una demostración de la compatibilidad de la M4 con
 la M3 y, por tanto, con la Enigma I. El diálogo es el siguiente:
 

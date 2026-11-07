@@ -1,0 +1,207 @@
+
+Ejemplo Rijmenants
+
+A 01 
+B 02
+C 03
+D 04
+E 05
+F 06
+G 07
+H 08
+I 09
+J 10
+K 11
+L 12
+M 13
+N 14
+O 15
+P 16
+Q 17
+R 18
+S 19
+T 20
+U 21
+V 22
+W 23
+X 24
+Y 25
+Z 26
+
+Vídeos
+
+https://www.youtube.com/watch?v=TYX691q2J2c
+
+Configurado basado en los datos para el día 31 (pag. 6)
+
+Walzenlage: I II V
+Ringstellung: F-06 V-22 N-14
+Steckerverbindungen: PO ML IU KJ NH YT GB VF RE DC
+                     BG CD ER FV HN IU JK LM OP TY
+
+Grundstellung: EHZ
+
+XWB deber ser cifrado como TBS
+
+XWB es cifrado como TLU si no contamos el Ringstellung
+
+Ahora tomamos el mensaje:
+
+TVEXS QBLTW LDAHH YEOEF
+PTWYB LENDP MKOXL DFAMU
+DWIJD XRJZ
+
+puesto como:
+
+            QBLTWLDAHHYEOEFPTWYBLENDPMKOXLDFAMUDWIJDXRJZ
+
+Clave de mensaje: XWB [24 23 2]
+
+nuestro:    EMWNGNGWDDZCEPCFVNSISMTAXBRFAZSBPULQJQMKHIMK
+enigmaco:   EMWNGNGWDDZCEPCFVNSISMTAXBRFAZSBPULQJQMKHIMK
+Rijmenats:  
+
+Pero ¡Ojo! cambiando la muesca de los rotores de sitio sale:
+
+"DERFUEHRERISTTODXDERKAMPFGEHTWEITERXDOENITZX"
+
+la configuración buena es:
+
+--rotor_01 :: Rotor   -- 'X'
+--rotor_01 = Rotor "EKMFLGDQVZNTOWYHXUSPAIBRCJ" "Q" "X" "UWYGADFPVZBECKMTHXSLRINQOJ"
+
+rotor_01_F05 :: Rotor   -- 'X'
+rotor_01_F05 = Rotor "EKMFLGDQVZNTOWYHXUSPAIBRCJ" "L" "X" "UWYGADFPVZBECKMTHXSLRINQOJ" 
+
+--rotor_02 :: Rotor   -- 'S'
+--rotor_02 = Rotor "AJDKSIRUXBLHWTMCQGZNPYFVOE" "E" "S" "AJPCZWRLFBDKOTYUQGENHXMIVS"
+
+rotor_02_V21 :: Rotor   -- 'S'
+rotor_02_V21 = Rotor "AJDKSIRUXBLHWTMCQGZNPYFVOE" "J" "S" "AJPCZWRLFBDKOTYUQGENHXMIVS"
+
+--rotor_05 :: Rotor   -- 'K'
+--rotor_05 = Rotor "VZBRGITYUPSDNHLXAWMJQOFECK" "Z" "K" "QCYLXWENFTZOSMVJUDKGIARPHB"
+
+rotor_05_N13 :: Rotor   -- 'K'
+rotor_05_N13 = Rotor "VZBRGITYUPSDNHLXAWMJQOFECK" "M" "K" "QCYLXWENFTZOSMVJUDKGIARPHB"
+
+rotorSetup_erRingstellung :: RotorSet
+rotorSetup_erRingstellung = RotorSet reflector_B (RotorDay rotor_01_F05 'Z') (RotorDay rotor_02_V21 'M') (RotorDay rotor_05_N13 'M')
+
+*Enigma> encodeText rotorSetup_erRingstellung pb_er "XWB"
+"TBS"
+
+rotorSetup_erRingstellungD :: RotorSet
+rotorSetup_erRingstellungD = RotorSet reflector_B (RotorDay rotor_01_F05 'S') (RotorDay rotor_02_V21 'B') (RotorDay rotor_05_N13 'O')
+
+*Enigma> encodeText rotorSetup_erRingstellungD pb_er "QBLTWLDAHHYEOEFPTWYBLENDPMKOXLDFAMUDWIJDXRJZ"
+"DERFUEHRERISTTODXDERKAMPFGEHTWEITERXDOENITZX"
+
+
+
+
+Otras pruebas sobre el ejemplo.
+
+Clave de mensaje: TBS [20 2 19]
+
+nuestro:    IQRUHNFLGNFYPNQQLXWVAAFOTQXYNYHALTNKQTMFHOXI
+enigmaco:   IQRUHNFLGNFYPNQQLXWVAAFOTQXYNYHALTNKQTMFHOXI
+Rijmenants: IQRUHNFLGNFYPNQQLXWVAAFOTQXYNYHALTNKQTMFHOXI
+
+Clave de mensaje: TLU [20 12 21]
+
+nuestro:    JOKHLXBVCDFXCDSEWFRYPUSYXGMBSIMAENCCCJFPFKZY
+enigmaco:   JOKHLXBVCDFXCDSEWFRYPUSYXGMBSIMAENCCCJFPFKZY
+Rijmenats:  JOKHLXBVCDFXCDSEWFRYPUSYXGMBSIMAENCCCJFPFKZY
+
+
+TEXTO CIFRADO REAL (PAG. 
+
+
+texto cifrado
+
+RFUGZ EDPUD NRGYS ZRCXN
+UYTPO MRMBO FKTBZ REZKM
+LXLVE FGUEY SIOZV EQMIK
+UBPMM YLKLT TDEIS MDICA
+GYKUA CTCDO MOHWX MUUIA
+UBSTS LRNBZ SZWNR FXWFY
+SSXJZ VIJHI DISHP RKLKA
+YUPAD TXQSP INQMA TLPIF
+SVKDA SCTAC DPBOP VHJK
+
+a descifrar
+
+      EDPUD NRGYS ZRCXN
+UYTPO MRMBO FKTBZ REZKM
+LXLVE FGUEY SIOZV EQMIK
+UBPMM YLKLT TDEIS MDICA
+GYKUA CTCDO MOHWX MUUIA
+UBSTS LRNBZ SZWNR FXWFY
+SSXJZ VIJHI DISHP RKLKA
+YUPAD TXQSP INQMA TLPIF
+SVKDA SCTAC DPBOP VHJK
+
+
+puesto como:
+
+EDPUDNRGYSZRCXNUYTPOMRMBOFKTBZREZKMLXLVEFGUEYSIOZVEQMIK
+UBPMMYLKLTTDEISMDICAGYKUACTCDOMOHWXMUUIAUBSTSLRNBZSZWNR
+FXWFYSSXJZVIJHIDISHPRKLKAYUPADTXQSPINQMATLPIFSVKDASCTAC
+DPBOPVHJK
+-------------------------
+            -------------
+ F  V  N  A | F  V  N  A
+ E  U  M  B | G  W  O  B
+ D  T  L  C | H  X  P  C
+ C  S  K  D | I  Y  Q  D
+ B  R  J  E | J  Z  R  E
+ A  Q  I  F | K  A  S  F
+ Z  P  H  G | L  B  T  G
+ Y  O  G  H | M  C  U  H
+ X  N  F  I | N  D  V  I
+ W  M  E  J | O  E  W  J
+ V  L  D  K | P  F  X  K
+ U  K  C  L | Q  G  Y  L
+ T  J  B  M | R  H  Z  M
+ S  I  A  N | S  I  A  N
+ R  H  Z  O | T  J  B  O
+ Q  G  Y  P | U  K  C  P
+ P  F  X  Q | V  L  D  Q
+ O  E  W  R | W  M  E  R
+ N  D  V  S | X  N  F  S
+ M  C  U  T | Y  O  G  T
+ L  B  T  U | Z  P  H  U
+ K  A  S  V | A  Q  I  V
+ J  Z  R  W | B  R  J  W
+ I  Y  Q  X | C  S  K  X
+ H  X  P  Y | D  T  L  Y
+ G  W  O  Z | E  U  M  Z
+
+
+Los rotores (Walzen en alemán) son los elementos más importantes de la máquina. Estos discos redondos, de aproximadamente 10 cm de diámetro, están hechos de metal o de baquelita. Un disco se compone de una carcasa redonda giratoria con las letras A a la Z o los números 01 a 26, y una muesca. El centro del rotor, que se fija a la ruedecilla, contiene 26 contactos de resorte en el lado derecho, Scramble cableado a 26 contactos planos en el lado izquierdo. Cambio del anillo alfabeto con su categoría, con relación a la posición del cableado interno, que se llama el anillo de ajuste (Ringstellung). El cableado representa un cifrado de sustitución y es diferente para cada rotor. los combinación de varios rotores, en posiciones siempre cambiantes respecto a la otra, es lo que hace el cifrado tan complejo. Cada rotor tiene en su izquierda una muesca (fijo al anillo) y en su derecho 26 dientes. Estos son utilizados por el mecanismo de paso a paso para avanzar en los rotores.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
